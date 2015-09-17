@@ -84,7 +84,8 @@ describe('Module: Proxy', function() {
       job = {
         data: {
           host: 'localhost',
-          port: 1234
+          port: 1234,
+          payload: 'MSH'
         }
       };
 
@@ -132,7 +133,7 @@ describe('Module: Proxy', function() {
       proxy.process(job, noop);
 
       expect(socket.connect).not.to.have.been.called;
-      expect(socket.write).to.have.been.called;
+      expect(socket.write).to.have.been.calledWith(job.data.payload);
     });
 
     it('should create a new socket if there is not one', function () {
@@ -140,7 +141,7 @@ describe('Module: Proxy', function() {
       delete proxy.sockets[key];
       proxy.process(job, noop);
       expect(socket.connect).to.have.been.called;
-      expect(socket.write).to.have.been.called;
+      expect(socket.write).to.have.been.calledWith(job.data.payload);
     });
 
     it('should return results if data is received', function (done) {
