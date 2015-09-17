@@ -6,7 +6,7 @@ var config = {
     pass: process.env.KUE_PASS || null,
     prefix: process.env.KUE_PREFIX || 'q'
   },
-  jobType: process.env.JOB_TYPE || 'TCP_PROXY'
+  jobType: process.env.JOB_TYPE || 'TCP-PROXY'
 };
 
 module.exports = config;

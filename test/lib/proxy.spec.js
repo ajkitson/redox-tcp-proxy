@@ -163,17 +163,13 @@ describe('Module: Proxy', function() {
       socket.emit('error', new Error());
     });
 
-    it('should not return if the response comes after 5 seconds', function () {
+    it('should return and error if the response comes after 5 seconds', function () {
       var clock = sinon.useFakeTimers();
       var done = sinon.spy();
-      socket.setTimeout = function () {
-        setTimeout(function(){
-          socket.emit('timeout');
-        }, 5000);
-      };
       proxy.process(job, done);
       clock.tick(5000);
-      expect(done).not.to.have.been.called;
+      socket.emit('data', 'ack');
+      expect(done).to.have.been.calledWith(sinon.match.instanceOf(Error));
     });
 
     it('should remove the socket on the close event', function () {
